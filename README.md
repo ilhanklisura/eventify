@@ -17,12 +17,13 @@ Eventify is built using PHP with the FlightPHP framework for the backend and MyS
   - **Attendees:** Browse and search for events on a public main page, book tickets, and leave reviews.
   
 - **CRUD Operations:**  
-  - Full Create, Read, Update, Delete support for at least five key entities:
+  - Full Create, Read, Update, Delete support for at least six key entities:
     - **Users**
     - **Events**
     - **Venues**
+    - **Categories**
+    - **Bookings**
     - **Tickets**
-    - **Reviews**
 
 - **Responsive & Dynamic UI:**  
   - Single-page application with AJAX-driven navigation and updates.
@@ -53,6 +54,18 @@ Eventify is built using PHP with the FlightPHP framework for the backend and MyS
   - JSON Web Tokens (JWT)
 - **Documentation:**  
   - OpenAPI (Swagger) for API documentation
+
+---
+
+## Database Schema
+
+### **Entities:**
+1. **Users**
+2. **Events**
+3. **Venues**
+4. **Categories**
+5. **Bookings**
+6. **Tickets**
 
 ---
 
@@ -99,7 +112,7 @@ Eventify is developed and deployed through 5 major milestones:
 
 - **Milestone 1:**
     - Project setup and static frontend development.
-    - Draft ERD for the five key entities.
+    - Draft ERD for the six key entities.
 
 - **Milestone 2:**
     - Creation of the MySQL database schema.
