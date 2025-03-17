@@ -1,0 +1,6 @@
+{
+    "name": "eventify/backend",
+    "require": {
+        "mikecao/flight": "^3.15"
+    }
+}
