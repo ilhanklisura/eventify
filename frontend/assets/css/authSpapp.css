@@ -1,0 +1,13 @@
+.auth-page .main-sidebar,
+.auth-page .user-panel,
+.auth-page .wrapper {
+  display: none !important;
+}
+
+.auth-page main {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

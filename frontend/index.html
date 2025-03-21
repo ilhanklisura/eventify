@@ -13,6 +13,8 @@
   <link rel="stylesheet" href="assets/css/adminlte.min.css">
   <!-- SPAPP CSS -->
   <link rel="stylesheet" href="assets/css/spapp.css">
+
+  <link rel="stylesheet" href="assets/css/authSpapp.css">
 </head>
 
 <body class="hold-transition sidebar-mini layout-fixed">
@@ -126,6 +128,23 @@
 
 <!-- Chart Modal Script -->
 <script src="utils/chartModals.js"></script>
+
+<script>
+  function toggleLayout() {
+    const hash = window.location.hash;
+    const wrapper = document.querySelector(".wrapper");
+    const sidebar = document.querySelector(".main-sidebar");
+
+    if (hash === "#login" || hash === "#register") {
+      wrapper.classList.add("auth-page"); // Add a class to hide sidebar & navbar
+    } else {
+      wrapper.classList.remove("auth-page"); // Show sidebar again on other pages
+    }
+  }
+
+  window.addEventListener("hashchange", toggleLayout);
+  document.addEventListener("DOMContentLoaded", toggleLayout);
+</script>
 
 </body>
 </html>
