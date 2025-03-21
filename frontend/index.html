@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Eventify | Dashboard</title>
+  <title>Eventify | Event Management System</title>
 
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -17,16 +17,6 @@
 
 <body class="hold-transition sidebar-mini layout-fixed">
 <div class="wrapper">
-
-  <!-- Navbar -->
-  <nav class="main-header navbar navbar-expand navbar-white navbar-light">
-    <ul class="navbar-nav">
-      <li class="nav-item">
-        <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
-      </li>
-    </ul>
-  </nav>
-  <!-- /.navbar -->
 
   <!-- Main Sidebar Container -->
   <aside class="main-sidebar sidebar-dark-primary elevation-4">
@@ -42,7 +32,7 @@
       <!-- Sidebar user panel (optional) -->
       <div class="user-panel mt-3 pb-3 mb-3 d-flex">
         <div class="image">
-          <img src="assets/img/ilhan.jpg" class="img-circle elevation-2" alt="User Image">
+          <img src="assets/img/avatar5.png" class="img-circle elevation-2" alt="User Image">
         </div>
         <div class="info">
           <a href="#" class="d-block">Ilhan Klisura</a>
@@ -53,9 +43,21 @@
       <nav class="mt-2">
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
           <li class="nav-item">
-            <a href="#dashboard" class="nav-link active">
+            <a href="#dashboard" class="nav-link">
               <i class="nav-icon fas fa-home"></i>
               <p>Dashboard</p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="#users" class="nav-link">
+              <i class="nav-icon fas fa-user"></i>
+              <p>Users</p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="#categories" class="nav-link">
+              <i class="nav-icon fas fa-list"></i>
+              <p>Categories</p>
             </a>
           </li>
           <li class="nav-item">
@@ -65,28 +67,21 @@
             </a>
           </li>
           <li class="nav-item">
-            <a href="#users" class="nav-link">
-              <i class="nav-icon far fa-user"></i>
-              <p>Users</p>
-            </a>
-          </li>
-          <li class="nav-item">
             <a href="#tickets" class="nav-link">
-              <i class="nav-icon fas fa-bookmark"></i>
+              <i class="nav-icon fas fa-ticket"></i>
               <p>Tickets</p>
             </a>
           </li>
-          <li class="nav-header">MISCELLANEOUS</li>
           <li class="nav-item">
-            <a href="#settings" class="nav-link">
-              <i class="nav-icon fas fa-box"></i>
-              <p>Settings</p>
+            <a href="#bookings" class="nav-link">
+              <i class="nav-icon fas fa-check"></i>
+              <p>Bookings</p>
             </a>
           </li>
           <li class="nav-item">
-            <a href="#profile" class="nav-link">
-              <i class="nav-icon fas fa-user"></i>
-              <p>Profile</p>
+            <a href="#venues" class="nav-link">
+              <i class="nav-icon fas fa-location-dot"></i>
+              <p>Venues</p>
             </a>
           </li>
         </ul>
@@ -96,110 +91,29 @@
 
   </aside>
 
-  
-  <section id="pageContent">
-    <main id="spapp" role="main">
-        <section id="dashboard" data-load="dashboard.html"></section>
-        <section id="events" data-load="events.html"></section>
-        <section id="users" data-load="users.html"></section>
-        <section id="tickets" data-load="tickets.html"></section>
-        <section id="settings" data-load="settings.html"></section>
-        <section id="profile" data-load="profile.html"></section>
-    </main>
-  </section>
+  <main id="spapp" role="main">
+    <section id="dashboard" data-load="dashboard.html"></section>
+    <section id="categories" data-load="categories.html"></section>
+    <section id="events" data-load="events.html"></section>
+    <section id="tickets" data-load="tickets.html"></section>
+    <section id="users" data-load="users.html"></section>
+    <section id="bookings" data-load="bookings.html"></section>
+    <section id="venues" data-load="venues.html"></section>
+    <section id="login" data-load="login.html"></section>
+    <section id="register" data-load="register.html"></section>
+  </main>
 
-  <!-- Content Wrapper. Contains page content -->
-  <div class="content-wrapper">
-    <!-- Content Header (Page header) -->
-    <div class="content-header">
-      <div class="container-fluid">
-        <div class="row mb-2">
-          <div class="col-sm-6">
-            <h1 class="m-0">Dashboard</h1>
-          </div><!-- /.col -->
-        </div><!-- /.row -->
-      </div><!-- /.container-fluid -->
-    </div>
-    <!-- /.content-header -->
-
-    <!-- Main content -->
-    <section class="content">
-      <div class="container-fluid">
-
-        <!-- Main row -->
-        <div class="row">
-
-          <!-- left col -->
-          <section class="col-lg-6 connectedSortable">
-            <!-- MOST VISITED MONTH -->
-            <div class="card card-success">
-              <div class="card-header">
-                <h3 class="card-title">MOST VISITED MONTH</h3>
-
-                <div class="card-tools">
-                  <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                    <i class="fas fa-minus"></i>
-                  </button>
-                  <button type="button" class="btn btn-tool" data-card-widget="remove">
-                    <i class="fas fa-times"></i>
-                  </button>
-                </div>
-              </div>
-              <div class="card-body">
-                <div class="chart">
-                  <canvas id="barChart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
-                </div>
-              </div>
-              <!-- /.card-body -->
-            </div>
-            <!-- /.card -->
-          </section>
-          <!-- left col -->
-
-          <!-- right col -->
-          <section class="col-lg-6 connectedSortable">
-            <!-- MOST VISITED EVENTS -->
-            <div class="card card-danger">
-              <div class="card-header">
-                <h3 class="card-title">MOST VISITED EVENTS</h3>
-
-                <div class="card-tools">
-                  <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                    <i class="fas fa-minus"></i>
-                  </button>
-                  <button type="button" class="btn btn-tool" data-card-widget="remove">
-                    <i class="fas fa-times"></i>
-                  </button>
-                </div>
-              </div>
-              <div class="card-body">
-                <canvas id="donutChart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
-              </div>
-              <!-- /.card-body -->
-            </div>
-            <!-- /.card -->
-          </section>
-          <!-- right col -->
-
-        </div>
-        <!-- /.row (main row) -->
-         
-      </div>
-      <!-- /.container-fluid -->
-    </section>
-    <!-- /.content -->
-  </div>
-  <!-- /.content-wrapper -->
-  <footer class="main-footer">
-    <strong>Copyright &copy; 2025 <a href="https://ilhanklisura.com" target="_blank">Klisura Ilhan</a>.</strong>
-    All rights reserved.
-  </footer>
 </div>
 <!-- ./wrapper -->
 
+<!-- jQuery (required for Bootstrap 4) -->
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
-<!-- jQuery -->
-<script src="assets/js/jquery.min.js"></script>
+<!-- Popper.js (required for Bootstrap modals/tooltips) -->
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+
+<!-- Bootstrap JS -->
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <!-- Chart.js -->
 <script src="assets/js/chart.min.js"></script>
 <!-- AdminLTE  -->
