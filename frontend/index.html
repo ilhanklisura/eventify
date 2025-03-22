@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Eventify | Event Management System</title>
+
+  <!-- Google Font: Source Sans Pro -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="assets/css/adminlte.min.css">
+  <!-- SPAPP CSS -->
+  <link rel="stylesheet" href="assets/css/spapp.css">
+
+  <link rel="stylesheet" href="assets/css/authSpapp.css">
+</head>
+
+<body class="hold-transition sidebar-mini layout-fixed">
+<div class="wrapper">
+
+  <!-- Main Sidebar Container -->
+  <aside class="main-sidebar sidebar-dark-primary elevation-4">
+    <!-- Brand Logo -->
+    <a href="#dashboard" class="brand-link">
+      <img src="assets/img/logo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
+      <span class="brand-text font-weight-light">Eventify</span>
+    </a>
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+      
+      <!-- Sidebar user panel (optional) -->
+      <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+        <div class="image">
+          <img src="assets/img/avatar5.png" class="img-circle elevation-2" alt="User Image">
+        </div>
+        <div class="info">
+          <a href="#dashboard" class="d-block">Ilhan Klisura</a>
+        </div>
+      </div>
+
+      <!-- Sidebar Menu -->
+      <nav class="mt-2">
+        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+          <li class="nav-item">
+            <a href="#dashboard" class="nav-link">
+              <i class="nav-icon fas fa-home"></i>
+              <p>Dashboard</p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="#users" class="nav-link">
+              <i class="nav-icon fas fa-user"></i>
+              <p>Users</p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="#categories" class="nav-link">
+              <i class="nav-icon fas fa-list"></i>
+              <p>Categories</p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="#events" class="nav-link">
+              <i class="nav-icon far fa-calendar-alt"></i>
+              <p>Events</p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="#tickets" class="nav-link">
+              <i class="nav-icon fas fa-ticket"></i>
+              <p>Tickets</p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="#bookings" class="nav-link">
+              <i class="nav-icon fas fa-check"></i>
+              <p>Bookings</p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="#venues" class="nav-link">
+              <i class="nav-icon fas fa-location-dot"></i>
+              <p>Venues</p>
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+    <!-- /.sidebar -->
+
+  </aside>
+
+  <main id="spapp" role="main">
+    <section id="dashboard" data-load="dashboard.html"></section>
+    <section id="categories" data-load="categories.html"></section>
+    <section id="events" data-load="events.html"></section>
+    <section id="tickets" data-load="tickets.html"></section>
+    <section id="users" data-load="users.html"></section>
+    <section id="bookings" data-load="bookings.html"></section>
+    <section id="venues" data-load="venues.html"></section>
+    <section id="login" data-load="login.html"></section>
+    <section id="register" data-load="register.html"></section>
+  </main>
+
+</div>
+<!-- ./wrapper -->
+
+<!-- jQuery (required for Bootstrap 4) -->
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+<!-- Popper.js (required for Bootstrap modals/tooltips) -->
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+
+<!-- Bootstrap JS -->
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<!-- Chart.js -->
+<script src="assets/js/chart.min.js"></script>
+<!-- AdminLTE  -->
+<script src="assets/js/adminlte.js"></script>
+
+<!-- jQuery SPAPP -->
+<script src="assets/js/jquery.spapp.min.js"></script>
+<!-- Router Script -->
+<script src="assets/js/router.js"></script>
+
+<!-- Chart Modal Script -->
+<script src="utils/chartModals.js"></script>
+
+<script>
+  function toggleLayout() {
+    const hash = window.location.hash;
+    const wrapper = document.querySelector(".wrapper");
+    const sidebar = document.querySelector(".main-sidebar");
+
+    if (hash === "#login" || hash === "#register") {
+      wrapper.classList.add("auth-page"); // Add a class to hide sidebar & navbar
+    } else {
+      wrapper.classList.remove("auth-page"); // Show sidebar again on other pages
+    }
+  }
+
+  window.addEventListener("hashchange", toggleLayout);
+  document.addEventListener("DOMContentLoaded", toggleLayout);
+</script>
+
+</body>
+</html>
