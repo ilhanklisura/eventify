@@ -1,0 +1,191 @@
+<!-- Navbar -->
+<nav class="main-header navbar navbar-expand navbar-white navbar-light">
+<ul class="navbar-nav">
+	<li class="nav-item">
+	<a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+	</li>
+</ul>
+</nav>
+
+<!-- Content Wrapper -->
+<div class="content-wrapper">
+<!-- Header -->
+<div class="content-header">
+	<div class="container-fluid">
+	<div class="row mb-2">
+		<div class="col-sm-6">
+		<h1 class="m-0">Users</h1>
+		</div>
+	</div>
+	</div>
+</div>
+
+<!-- Main content -->
+<section class="content">
+	<div class="container-fluid">
+
+	<!-- Users Card -->
+	<div class="card">
+		<div class="card-header">
+		<button class="btn btn-primary float-right" data-toggle="modal" data-target="#addUserModal">
+			<i class="fas fa-user-plus"></i> Add User
+		</button>
+		</div>
+		<div class="card-body">
+		<table id="usersTable" class="table table-bordered table-striped">
+			<thead>
+			<tr>
+				<th>ID</th>
+				<th>Name</th>
+				<th>Email</th>
+				<th>Role</th>
+				<th>Actions</th>
+			</tr>
+			</thead>
+			<tbody>
+			<!-- Filled dynamically -->
+			</tbody>
+		</table>
+		</div>
+	</div>
+
+	<!-- Add User Modal -->
+	<div class="modal fade" id="addUserModal" tabindex="-1" role="dialog">
+		<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+			<h5 class="modal-title">Add User</h5>
+			<button type="button" class="close" data-dismiss="modal">&times;</button>
+			</div>
+			<div class="modal-body">
+			<form id="addUserForm">
+				<div class="form-group">
+				<label>Name</label>
+				<input type="text" class="form-control" id="userName" required>
+				</div>
+				<div class="form-group">
+				<label>Email</label>
+				<input type="email" class="form-control" id="userEmail" required>
+				</div>
+				<div class="form-group">
+				<label>Role</label>
+				<select class="form-control" id="userRole">
+					<option value="Attendee">Attendee</option>
+					<option value="Organizer">Organizer</option>
+				</select>
+				</div>
+				<button type="submit" class="btn btn-success">Add User</button>
+			</form>
+			</div>
+		</div>
+		</div>
+	</div>
+
+	<!-- Edit User Modal -->
+	<div class="modal fade" id="editUserModal" tabindex="-1" role="dialog">
+		<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+			<h5 class="modal-title">Edit User</h5>
+			<button type="button" class="close" data-dismiss="modal">&times;</button>
+			</div>
+			<div class="modal-body">
+			<form id="editUserForm">
+				<input type="hidden" id="editUserId">
+				<div class="form-group">
+				<label>Name</label>
+				<input type="text" class="form-control" id="editUserName" required>
+				</div>
+				<div class="form-group">
+				<label>Email</label>
+				<input type="email" class="form-control" id="editUserEmail" required>
+				</div>
+				<div class="form-group">
+				<label>Role</label>
+				<select class="form-control" id="editUserRole">
+					<option value="Attendee">Attendee</option>
+					<option value="Organizer">Organizer</option>
+				</select>
+				</div>
+				<button type="submit" class="btn btn-warning">Update User</button>
+			</form>
+			</div>
+		</div>
+		</div>
+	</div>
+
+	</div>
+</section>
+</div>
+
+<!-- Footer -->
+<footer class="main-footer">
+<strong>Copyright &copy; 2025 <a href="https://ilhanklisura.com" target="_blank">Klisura Ilhan</a>.</strong> All rights reserved.
+</footer>
+
+<!-- JS Logic -->
+<script>
+function loadUsers() {
+	const users = JSON.parse(localStorage.getItem("users")) || [];
+	const tbody = document.querySelector("#usersTable tbody");
+	tbody.innerHTML = "";
+	users.forEach((user, index) => {
+	tbody.innerHTML += `
+		<tr>
+		<td>${index + 1}</td>
+		<td>${user.name}</td>
+		<td>${user.email}</td>
+		<td>${user.role}</td>
+		<td>
+			<button class="btn btn-sm btn-warning" onclick="openEditUser(${index})">Edit</button>
+			<button class="btn btn-sm btn-danger" onclick="deleteUser(${index})">Delete</button>
+		</td>
+		</tr>`;
+	});
+}
+
+document.getElementById("addUserForm").addEventListener("submit", function (e) {
+	e.preventDefault();
+	const name = document.getElementById("userName").value;
+	const email = document.getElementById("userEmail").value;
+	const role = document.getElementById("userRole").value;
+	const users = JSON.parse(localStorage.getItem("users")) || [];
+	users.push({ name, email, role });
+	localStorage.setItem("users", JSON.stringify(users));
+	$('#addUserModal').modal('hide');
+	this.reset();
+	loadUsers();
+});
+
+function deleteUser(index) {
+	const users = JSON.parse(localStorage.getItem("users")) || [];
+	users.splice(index, 1);
+	localStorage.setItem("users", JSON.stringify(users));
+	loadUsers();
+}
+
+function openEditUser(index) {
+	const users = JSON.parse(localStorage.getItem("users")) || [];
+	const user = users[index];
+	document.getElementById("editUserId").value = index;
+	document.getElementById("editUserName").value = user.name;
+	document.getElementById("editUserEmail").value = user.email;
+	document.getElementById("editUserRole").value = user.role;
+	$('#editUserModal').modal('show');
+}
+
+document.getElementById("editUserForm").addEventListener("submit", function (e) {
+	e.preventDefault();
+	const index = document.getElementById("editUserId").value;
+	const name = document.getElementById("editUserName").value;
+	const email = document.getElementById("editUserEmail").value;
+	const role = document.getElementById("editUserRole").value;
+	const users = JSON.parse(localStorage.getItem("users")) || [];
+	users[index] = { name, email, role };
+	localStorage.setItem("users", JSON.stringify(users));
+	$('#editUserModal').modal('hide');
+	loadUsers();
+});
+
+document.addEventListener("DOMContentLoaded", loadUsers);
+</script>
