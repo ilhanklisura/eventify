@@ -1,6 +1,6 @@
 {
     "name": "eventify/backend",
     "require": {
-        "mikecao/flight": "^3.15"
+        "flightphp/core": "^3.15"
     }
 }
