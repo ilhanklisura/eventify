@@ -13,8 +13,18 @@
  *     )
  *   ),
  *   @OA\Server(
- *     url=BASE_URL,
- *     description="Local Development Server"
+ *     url=LOCALSERVER,
+ *     description="Local API Server"
+ *   ),
+ *  @OA\Server(
+ *    url=PRODSERVER,
+ *    description="Production API Server"
  *   )
+ * )
+ * @OA\SecurityScheme(
+ *     securityScheme="ApiKey",
+ *     type="apiKey",
+ *     in="header",
+ *     name="Authentication"
  * )
  */
