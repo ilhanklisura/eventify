@@ -1,5 +1,5 @@
 <?php
-require_once __DIR__ . '/../dao/TicketDao.php';
+require_once __DIR__ . '/../../dao/TicketDao.php';
 $ticketDao = new TicketDao();
 
 echo "<strong>✅ ADD Ticket</strong><br>";
