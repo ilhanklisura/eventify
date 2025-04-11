@@ -1,5 +1,5 @@
 <?php
-require_once __DIR__ . '/../dao/EventDao.php';
+require_once __DIR__ . '/../../dao/EventDao.php';
 $eventDao = new EventDao();
 
 echo "<strong>✅ ADD Event</strong><br>";
