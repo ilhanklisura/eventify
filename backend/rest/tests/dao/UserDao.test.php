@@ -1,5 +1,5 @@
 <?php
-require_once __DIR__ . '/../dao/UserDao.php';
+require_once __DIR__ . '/../../dao/UserDao.php';
 $userDao = new UserDao();
 
 echo "<strong>✅ ADD User</strong><br>";

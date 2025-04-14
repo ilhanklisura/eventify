@@ -13,4 +13,11 @@ class VenueDao extends BaseDao {
     public function get_by_id($id) {
         return $this->query_unique("SELECT * FROM venues WHERE id = :id", ["id" => $id]);
     }
+
+    public function get_by_name_and_location($name, $location) {
+        return $this->query_unique(
+            "SELECT * FROM venues WHERE name = :name AND location = :location",
+            ['name' => $name, 'location' => $location]
+        );
+    }
 }

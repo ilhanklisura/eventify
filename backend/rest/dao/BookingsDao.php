@@ -13,4 +13,11 @@ class BookingsDao extends BaseDao {
     public function get_by_id($id) {
         return $this->query_unique("SELECT * FROM bookings WHERE id = :id", ["id" => $id]);
     }
+
+    public function get_by_user_and_event($user_id, $event_id){
+        return $this->query_unique(
+            "SELECT * FROM {$this->table} WHERE user_id = :user_id AND event_id = :event_id",
+            ['user_id' => $user_id, 'event_id' => $event_id]
+        );
+    }    
 }

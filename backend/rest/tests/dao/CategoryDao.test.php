@@ -1,5 +1,5 @@
 <?php
-require_once __DIR__ . '/../dao/CategoryDao.php';
+require_once __DIR__ . '/../../dao/CategoryDao.php';
 $categoryDao = new CategoryDao();
 
 echo "<strong>✅ ADD Category</strong><br>";
