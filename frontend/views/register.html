@@ -5,59 +5,59 @@
 
   <div class="card">
     <div class="card-body register-card-body">
-      <form action="#dashboard" method="post">
+      <form id="register-form">
         <div class="input-group mb-3">
-          <input type="text" class="form-control" placeholder="Full name">
+          <input type="text" name="name" class="form-control" placeholder="Full name" required>
           <div class="input-group-append">
-            <div class="input-group-text">
-              <span class="fas fa-user"></span>
-            </div>
+            <div class="input-group-text"><span class="fas fa-user"></span></div>
           </div>
         </div>
         <div class="input-group mb-3">
-          <input type="email" class="form-control" placeholder="Email">
+          <input type="email" name="email" class="form-control" placeholder="Email" required>
           <div class="input-group-append">
-            <div class="input-group-text">
-              <span class="fas fa-envelope"></span>
-            </div>
+            <div class="input-group-text"><span class="fas fa-envelope"></span></div>
           </div>
         </div>
         <div class="input-group mb-3">
-          <input type="password" class="form-control" placeholder="Password">
+          <input type="password" name="password" class="form-control" placeholder="Password" required minlength="6">
           <div class="input-group-append">
-            <div class="input-group-text">
-              <span class="fas fa-lock"></span>
-            </div>
-          </div>
-        </div>
-        <div class="input-group mb-3">
-          <input type="password" class="form-control" placeholder="Retype password">
-          <div class="input-group-append">
-            <div class="input-group-text">
-              <span class="fas fa-lock"></span>
-            </div>
+            <div class="input-group-text"><span class="fas fa-lock"></span></div>
           </div>
         </div>
         <div class="row">
           <div class="col-8">
-            <div class="icheck-primary">
-              <input type="checkbox" id="agreeTerms" name="terms" value="agree">
-              <label for="agreeTerms">
-               I agree to the <a href="#">terms</a>
-              </label>
-            </div>
+            <a href="#login" class="text-center">I'm registered!</a>
           </div>
-          <!-- /.col -->
           <div class="col-4">
             <button type="submit" class="btn btn-primary btn-block">Register</button>
           </div>
-          <!-- /.col -->
         </div>
       </form>
 
-      <a href="#login" class="text-center">I already have a membership</a>
     </div>
-    <!-- /.form-box -->
-  </div><!-- /.card -->
+  </div>
 </div>
-<!-- /.register-box -->
+
+<script>
+  $("#register-form").validate({
+    submitHandler: function(form) {
+      const data = Object.fromEntries(new FormData(form).entries());
+
+      $.ajax({
+        url: Constants.PROJECT_BASE_URL + "auth/register",
+        type: "POST",
+        data: JSON.stringify(data),
+        contentType: "application/json",
+        success: function(response) {
+          toastr.success("Registration successful. Redirecting to login...");
+          setTimeout(() => {
+            window.location.replace("#login");
+          }, 2000);
+        },
+        error: function(xhr) {
+          toastr.error(xhr.responseText || "Registration failed");
+        }
+      });
+    }
+  });
+</script>
