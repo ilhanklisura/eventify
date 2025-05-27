@@ -60,15 +60,22 @@ class BaseDao
 
     public function update($entity, $id, $id_column = "id")
     {
+        $fields = array_keys($entity);
+
+        if (count($fields) === 0) {
+            throw new Exception("No data provided for update");
+        }
+
         $query = "UPDATE " . $this->table . " SET ";
-        foreach ($entity as $column => $value) {
+        foreach ($fields as $column) {
             $query .= $column . "=:" . $column . ", ";
         }
-        $query = substr($query, 0, -2);
+        $query = rtrim($query, ", ");
         $query .= " WHERE " . $id_column . " = :id";
 
-        $stmt = $this->connection->prepare($query);
         $entity['id'] = $id;
+
+        $stmt = $this->connection->prepare($query);
         $stmt->execute($entity);
         return $entity;
     }

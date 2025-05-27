@@ -1,166 +1,149 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Eventify | Event Management System</title>
 
   <!-- Favicon -->
-  <link rel="icon" type="image/x-icon" href="assets/img/favicon.ico">
+  <link rel="icon" type="image/x-icon" href="assets/img/favicon.ico" />
 
   <!-- Google Font: Source Sans Pro -->
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback" />
+
   <!-- Font Awesome -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-  
-  <!-- AdminLTE CSS -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/css/adminlte.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
 
-  <!-- Theme style 
-  <link rel="stylesheet" href="assets/css/adminlte.min.css">-->
+  <!-- AdminLTE -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/css/adminlte.min.css" />
 
-  <!-- SPAPP CSS -->
-  <link rel="stylesheet" href="assets/css/spapp.css">
+  <!--Datatable CSS-->
+  <link href="https://cdn.datatables.net/2.0.3/css/dataTables.dataTables.min.css" rel="stylesheet">
 
-  <link rel="stylesheet" href="assets/css/authSpapp.css">
+  <!-- Toastr CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+
+  <!-- SPApp CSS -->
+  <link rel="stylesheet" href="assets/css/spapp.css" />
+  <link rel="stylesheet" href="assets/css/authSpapp.css" />
 </head>
 
 <body class="hold-transition sidebar-mini layout-fixed">
 <div class="wrapper">
 
-  <!-- Main Sidebar Container -->
+  <!-- Sidebar -->
   <aside class="main-sidebar sidebar-dark-primary elevation-4">
-    <!-- Brand Logo -->
     <a href="#dashboard" class="brand-link">
-      <img src="assets/img/logo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
+      <img src="assets/img/logo.png" alt="Eventify Logo" class="brand-image img-circle elevation-3" />
       <span class="brand-text font-weight-light">Eventify</span>
     </a>
 
-    <!-- Sidebar -->
     <div class="sidebar">
-      
-      <!-- Sidebar user panel (optional) -->
       <div class="user-panel mt-3 pb-3 mb-3 d-flex">
         <div class="image">
-          <img src="assets/img/avatar5.png" class="img-circle elevation-2" alt="User Image">
+          <img src="assets/img/avatar5.png" class="img-circle elevation-2" alt="User Image" />
         </div>
         <div class="info">
-          <a href="#dashboard" class="d-block">Ilhan Klisura</a>
+          <a href="#dashboard" class="d-block" id="userDisplayName">Korisnik</a>
         </div>
       </div>
 
-      <!-- Sidebar Menu -->
       <nav class="mt-2">
-        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-          <li class="nav-item">
-            <a href="#dashboard" class="nav-link">
-              <i class="nav-icon fas fa-home"></i>
-              <p>Dashboard</p>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="#users" class="nav-link">
-              <i class="nav-icon fas fa-user"></i>
-              <p>Users</p>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="#categories" class="nav-link">
-              <i class="nav-icon fas fa-list"></i>
-              <p>Categories</p>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="#events" class="nav-link">
-              <i class="nav-icon far fa-calendar-alt"></i>
-              <p>Events</p>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="#tickets" class="nav-link">
-              <i class="nav-icon fas fa-ticket"></i>
-              <p>Tickets</p>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="#bookings" class="nav-link">
-              <i class="nav-icon fas fa-check"></i>
-              <p>Bookings</p>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="#venues" class="nav-link">
-              <i class="nav-icon fas fa-location-dot"></i>
-              <p>Venues</p>
-            </a>
-          </li>
+        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false" id="tabs">
+          <!-- Menu will be dynamically generated -->
         </ul>
       </nav>
     </div>
-    <!-- /.sidebar -->
-
   </aside>
 
+  <!-- Content -->
   <main id="spapp" role="main">
-    <section id="dashboard" data-load="dashboard.html"></section>
-    <section id="categories" data-load="categories.html"></section>
-    <section id="events" data-load="events.html"></section>
-    <section id="tickets" data-load="tickets.html"></section>
-    <section id="users" data-load="users.html"></section>
-    <section id="bookings" data-load="bookings.html"></section>
-    <section id="venues" data-load="venues.html"></section>
-    <section id="login" data-load="login.html"></section>
-    <section id="register" data-load="register.html"></section>
+    <section id="dashboard" data-load="tpl/dashboard.html"></section>
+    <section id="categories" data-load="tpl/categories.html"></section>
+    <section id="events" data-load="tpl/events.html"></section>
+    <section id="tickets" data-load="tpl/tickets.html"></section>
+    <section id="users" data-load="tpl/users.html"></section>
+    <section id="bookings" data-load="tpl/bookings.html"></section>
+    <section id="venues" data-load="tpl/venues.html"></section>
   </main>
 
 </div>
-<!-- ./wrapper -->
 
-<!-- jQuery (required for Bootstrap 4) -->
+<!-- Scripts -->
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-
-<!-- jQuery Validate -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js"></script>
-
-<!-- Popper.js (required for Bootstrap modals/tooltips) -->
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
-
-<!-- Bootstrap JS -->
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-<!-- Chart.js 
-<script src="assets/js/chart.min.js"></script>
- -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
-
-<!-- AdminLTE App -->
 <script src="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/js/adminlte.min.js"></script>
+<!--Datatable JS-->
+<script src=https://cdn.datatables.net/2.0.3/js/dataTables.min.js></script>
+<!-- Toastr JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 
-<!-- AdminLTE  
-<script src="assets/js/adminlte.js"></script>-->
+<!-- Helperi -->
+<script src="utils/constants.js"></script>
+<script src="utils/utils.js"></script>
+<script src="utils/rest-client.js"></script>
 
-<!-- jQuery SPAPP -->
-<script src="assets/js/jquery.spapp.min.js"></script>
-<!-- Router Script -->
+<!-- Servisi -->
+<script src="services/user-service.js"></script>
+
+<!-- SPApp -->
+<script src="assets/js/jquery.spapp.js"></script>
 <script src="assets/js/router.js"></script>
 
-<!-- Chart Modal Script -->
+<!-- Chart Helpers -->
 <script src="utils/chartModals.js"></script>
 
 <script>
   function toggleLayout() {
     const hash = window.location.hash;
     const wrapper = document.querySelector(".wrapper");
-    const sidebar = document.querySelector(".main-sidebar");
-
     if (hash === "#login" || hash === "#register") {
-      wrapper.classList.add("auth-page"); // Add a class to hide sidebar & navbar
+      wrapper.classList.add("auth-page");
     } else {
-      wrapper.classList.remove("auth-page"); // Show sidebar again on other pages
+      wrapper.classList.remove("auth-page");
     }
   }
 
   window.addEventListener("hashchange", toggleLayout);
-  document.addEventListener("DOMContentLoaded", toggleLayout);
+  document.addEventListener("DOMContentLoaded", () => {
+    toggleLayout();
+    UserService.generateMenuItems();
+  });
+</script>
+<script>
+  function checkAuthRoute(route) {
+    const publicRoutes = ["login", "register"];
+    const token = localStorage.getItem("user_token");
+
+    if (!token && !publicRoutes.includes(route)) {
+      window.location.hash = "#login";
+      return false;
+    }
+
+    return true;
+  }
+</script>
+<script>
+  window.addEventListener("hashchange", UserService.checkRoleRoute);
+</script>
+<script>
+  function displayUserName() {
+    const token = localStorage.getItem("user_token");
+    if (token) {
+      try {
+        const user = JSON.parse(atob(token.split('.')[1]))?.user;
+        if (user?.name) {
+          document.getElementById("userDisplayName").textContent = user.name;
+        }
+      } catch (e) {
+        console.error("Failed to parse user token", e);
+      }
+    }
+  }
+
+  document.addEventListener("DOMContentLoaded", displayUserName);
 </script>
 
 </body>

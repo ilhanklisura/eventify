@@ -8,11 +8,10 @@ class CategoryService extends BaseService {
     }
 
     public function add($entity) {
-        if (empty($entity['name'])) {
+        if (!isset($entity['name']) || trim($entity['name']) === '') {
             Flight::halt(400, "Category name is required.");
         }
 
-        // Check for duplicate category
         $existing = $this->dao->get_by_name($entity['name']);
         if ($existing) {
             Flight::halt(409, "Category already exists.");
@@ -20,4 +19,9 @@ class CategoryService extends BaseService {
 
         return parent::add($entity);
     }
+
+    public function get_all() {
+        return $this->dao->get_all();
+    }
+
 }

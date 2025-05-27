@@ -27,7 +27,7 @@ class Config
     }
 
     public static function JWT_SECRET() {
-        return Config::get_env("DB_HOST", 'a44536575f884d672ad9180d896281aac7057b37166cc3e68345646512c791ef');
+        return Config::get_env("DB_HOST", '653a7e33c68f046b0ef8ffca0493b89abc3ba68fc0c11842e3822c0510297189');
     }
 
     public static function get_env($name, $default){

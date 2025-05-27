@@ -1,0 +1,70 @@
+<!-- Navbar -->
+<nav class="main-header navbar navbar-expand navbar-white navbar-light">
+<ul class="navbar-nav">
+	<li class="nav-item">
+	<a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+	</li>
+</ul>
+</nav>
+<!-- /.navbar -->
+
+<div class="content-wrapper">
+	<section class="content">
+		<div class="container-fluid mt-4">
+			<div class="card">
+				<div class="card-header d-flex justify-content-between">
+					<h3 class="card-title">Venues</h3>
+					<button class="btn btn-primary" onclick="VenueService.openAddModal()">Add Venue</button>
+				</div>
+				<div class="card-body">
+					<table id="venuesTable" class="table table-bordered">
+						<thead>
+						<tr>
+							<th>ID</th>
+							<th>Name</th>
+							<th>Location</th>
+							<th>Actions</th>
+						</tr>
+						</thead>
+						<tbody></tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</section>
+</div>
+
+<!-- Add/Edit Modal -->
+<div class="modal fade" id="venueModal" tabindex="-1" role="dialog">
+	<div class="modal-dialog" role="document">
+		<form id="venueForm">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title">Venue</h5>
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+				</div>
+				<div class="modal-body">
+					<input type="hidden" id="venueId" />
+					<div class="form-group">
+						<label for="venueName">Name</label>
+						<input type="text" id="venueName" class="form-control" required />
+					</div>
+					<div class="form-group">
+						<label for="venueLocation">Location</label>
+						<input type="text" id="venueLocation" class="form-control" required />
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="submit" class="btn btn-success">Save</button>
+				</div>
+			</div>
+		</form>
+	</div>
+</div>
+
+<footer class="main-footer">
+	<strong>Copyright &copy; 2025 <a href="https://ilhanklisura.com" target="_blank">Klisura Ilhan</a>.</strong>All rights reserved.
+</footer>
+
+<script src="./services/venue-service.js"></script>
+<script>VenueService.init();</script>

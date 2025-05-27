@@ -6,6 +6,9 @@ require './vendor/autoload.php';
 require_once 'middleware/AuthMiddleware.php';
 require_once 'rest/services/AuthService.php';
 
+use Firebase\JWT\JWT;
+use Firebase\JWT\Key;
+
 // Glavni servisi
 require_once 'rest/services/UserService.php';
 require_once 'rest/services/CategoryService.php';
@@ -17,7 +20,7 @@ require_once 'rest/services/BookingService.php';
 // Registracija servisa
 Flight::register('auth_service', 'AuthService');
 Flight::register('auth_middleware', 'AuthMiddleware');
-Flight::register('user_service', 'AuthService');
+Flight::register('user_service', 'UserService');
 Flight::register('category_service', 'CategoryService');
 Flight::register('event_service', 'EventService');
 Flight::register('ticket_service', 'TicketService');
@@ -49,10 +52,12 @@ Flight::route('/*', function () {
 
     try {
         Flight::auth_middleware()->verifyToken($token);
+        return true;
     } catch (Exception $e) {
         Flight::halt(401, $e->getMessage());
     }
 });
+
 
 // REST rute
 require_once 'rest/routes/AuthRoutes.php';
