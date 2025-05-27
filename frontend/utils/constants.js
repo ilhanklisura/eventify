@@ -1,9 +1,5 @@
-var Constants = {
-	get_api_base_url: function () {
-	  if (location.hostname == "localhost") {
-		 return "http://localhost:8888/eventify/backend/";
-	  } else {
-		 return "";
-	  }
-	},
- };
+let Constants = {
+	PROJECT_BASE_URL: location.hostname == "localhost" ? "http://localhost/eventify/backend/" : "https://add-production-server-after-deployment/backend/",
+	USER_ROLE: "attendee",
+	ADMIN_ROLE: "organizer"
+};

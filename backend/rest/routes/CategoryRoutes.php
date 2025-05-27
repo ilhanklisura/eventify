@@ -5,12 +5,24 @@
  *     path="/categories",
  *     summary="Get all categories",
  *     tags={"Categories"},
+ *     security={{"ApiKey":{}}},
  *     @OA\Response(response="200", description="List of categories")
  * )
  */
 Flight::route('GET /categories', function () {
-    Flight::json(Flight::category_service()->get_all());
+    header('Content-Type: application/json');
+
+    $data = Flight::category_service()->get_all();
+
+    if (!$data || !is_array($data)) {
+        echo json_encode(["error" => "No data returned", "debug" => $data]);
+    } else {
+        echo json_encode($data);
+    }
+
+    die;
 });
+
 
 /**
  * @OA\Get(
@@ -30,15 +42,24 @@ Flight::route('GET /categories/@id', function ($id) {
  *     path="/categories",
  *     summary="Create category",
  *     tags={"Categories"},
- *     @OA\RequestBody(@OA\JsonContent(
- *         required={"name"},
- *         @OA\Property(property="name", type="string")
- *     )),
+ *     security={{"ApiKey":{}}},
+ *     @OA\RequestBody(
+ *         required=true,
+ *         @OA\JsonContent(
+ *             required={"name"},
+ *             @OA\Property(property="name", type="string")
+ *         )
+ *     ),
  *     @OA\Response(response="200", description="Category added")
  * )
  */
 Flight::route('POST /categories', function () {
     $data = Flight::request()->data->getData();
+
+    if (!isset($data['name']) || trim($data['name']) === '') {
+        Flight::halt(400, "Category name is required.");
+    }
+
     Flight::json([
         "message" => "Category added successfully",
         "data" => Flight::category_service()->add($data)
@@ -58,7 +79,12 @@ Flight::route('POST /categories', function () {
  * )
  */
 Flight::route('PUT /categories/@id', function ($id) {
-    $data = Flight::request()->data->getData();
+    $data = json_decode(Flight::request()->getBody(), true);
+
+    if (!isset($data['name']) || trim($data['name']) === '') {
+        Flight::halt(400, "Category name is required.");
+    }
+
     Flight::json([
         "message" => "Category updated successfully",
         "data" => Flight::category_service()->update($data, $id)
