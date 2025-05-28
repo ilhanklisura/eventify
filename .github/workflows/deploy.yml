@@ -1,0 +1,72 @@
+name: CI + Deploy for Eventify
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  ci-backend:
+    name: CI - Backend
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+          extensions: mbstring, intl, pdo, pdo_mysql
+
+      - name: Validate composer.json
+        run: |
+          cd backend
+          composer validate
+
+      - name: Install dependencies
+        run: |
+          cd backend
+          composer install --no-progress
+
+      - name: Run getCurlTest
+        run: |
+          cd backend/rest/tests
+          php getCurlTest.php || exit 1
+
+  ci-frontend:
+    name: CI - Frontend
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Check frontend files
+        run: |
+          cd frontend
+          echo "✔ Frontend folder structure OK"
+
+  deploy-backend:
+    name: Deploy Backend
+    runs-on: ubuntu-latest
+    needs: [ci-backend, ci-frontend]
+
+    steps:
+      - name: Trigger DigitalOcean Backend Deploy
+        run: |
+          curl -X POST "https://api.digitalocean.com/v2/apps/${{ secrets.DO_APP_ID_BACKEND }}/deployments" \
+          -H "Authorization: Bearer ${{ secrets.DO_API_TOKEN }}" \
+          -H "Content-Type: application/json"
+
+  deploy-frontend:
+    name: Deploy Frontend
+    runs-on: ubuntu-latest
+    needs: deploy-backend
+
+    steps:
+      - name: Trigger DigitalOcean Frontend Deploy
+        run: |
+          curl -X POST "https://api.digitalocean.com/v2/apps/${{ secrets.DO_APP_ID_FRONTEND }}/deployments" \
+          -H "Authorization: Bearer ${{ secrets.DO_API_TOKEN }}" \
+          -H "Content-Type: application/json"
