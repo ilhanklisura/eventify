@@ -92,7 +92,7 @@ Eventify is built using PHP with the FlightPHP framework for the backend and MyS
 
 5. **Running the Application:**
     - Use a local server environment (such as XAMPP, WAMP, or Docker) to serve both the backend and frontend.
-    - Access the application via your local domain (e.g., http://localhost/eventify).
+    - Access the application via your local domain (e.g., http://localhost/eventify/frontend).
 
 ---
 
@@ -100,7 +100,11 @@ Eventify is built using PHP with the FlightPHP framework for the backend and MyS
 
 The RESTful API is documented using the OpenAPI standard. After setting up the backend, you can access the API documentation at:
 ```
-http://ilhanklisura.com/api/docs
+http://localhost/eventify/backend/public/v1/docs/
+```
+or
+```
+https://seahorse-app-jta9z.ondigitalocean.app/backend/public/v1/docs/
 ```
 This Swagger UI page provides details on all available endpoints, request/response formats, and authentication methods.
 
@@ -139,7 +143,7 @@ Eventify is developed and deployed through 5 major milestones:
 
 Eventify is designed to be deployed on any modern hosting platform (e.g., Heroku, DigitalOcean, AWS). Once deployed, the live application can be accessed at:
 ```
-http://ilhanklisura.com
+https://seahorse-app-jta9z.ondigitalocean.app/
 ```
 
 ---
