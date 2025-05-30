@@ -2,28 +2,36 @@ let CategoryService = {
     init: function () {
         this.loadCategories();
 
-        $('#categoryForm').on('submit', function (e) {
-            e.preventDefault();
-            const id = $('#categoryId').val();
-            const name = $('#categoryName').val().trim();
-            if (!name) return toastr.error("Name is required");
+        $("#categoryForm").validate({
+            rules: {
+                categoryName: {
+                    required: true
+                }
+            },
+            messages: {
+                categoryName: {
+                    required: "Category name is required"
+                }
+            },
+            submitHandler: function (form) {
+                const id = $("#categoryId").val();
+                const name = $("#categoryName").val().trim();
 
-            const payload = { name };
+                const payload = { name };
 
-            if (id) {
-                // UPDATE
-                RestClient.put(`categories/${id}`, payload, function () {
-                    toastr.success("Category updated");
-                    $('#categoryModal').modal('hide');
-                    CategoryService.loadCategories();
-                });
-            } else {
-                // CREATE
-                RestClient.post("categories", payload, function () {
-                    toastr.success("Category created");
-                    $('#categoryModal').modal('hide');
-                    CategoryService.loadCategories();
-                });
+                if (id) {
+                    RestClient.put(`categories/${id}`, payload, function () {
+                        toastr.success("Category updated");
+                        $("#categoryModal").modal("hide");
+                        CategoryService.loadCategories();
+                    });
+                } else {
+                    RestClient.post("categories", payload, function () {
+                        toastr.success("Category created");
+                        $("#categoryModal").modal("hide");
+                        CategoryService.loadCategories();
+                    });
+                }
             }
         });
     },
@@ -52,17 +60,17 @@ let CategoryService = {
     },
 
     openAddModal: function () {
-        $('#categoryId').val('');
-        $('#categoryName').val('');
-        $('#categoryModal .modal-title').text('Add Category');
-        $('#categoryModal').modal('show');
+        $("#categoryId").val('');
+        $("#categoryName").val('');
+        $("#categoryModal .modal-title").text('Add Category');
+        $("#categoryModal").modal('show');
     },
 
     openEditModal: function (id, name) {
-        $('#categoryId').val(id);
-        $('#categoryName').val(name);
-        $('#categoryModal .modal-title').text('Edit Category');
-        $('#categoryModal').modal('show');
+        $("#categoryId").val(id);
+        $("#categoryName").val(name);
+        $("#categoryModal .modal-title").text('Edit Category');
+        $("#categoryModal").modal('show');
     },
 
     delete: function (id) {

@@ -12,26 +12,43 @@ let BookingService = {
             });
         });
 
-        $("#bookingForm").on("submit", function (e) {
-            e.preventDefault();
-            const id = $("#bookingId").val();
-            const data = {
-                user_id: $("#bookingUser").val(),
-                event_id: $("#bookingEvent").val()
-            };
+        $("#bookingForm").validate({
+            rules: {
+                bookingUser: {
+                    required: true
+                },
+                bookingEvent: {
+                    required: true
+                }
+            },
+            messages: {
+                bookingUser: {
+                    required: "Please select a user"
+                },
+                bookingEvent: {
+                    required: "Please select an event"
+                }
+            },
+            submitHandler: function (form) {
+                const id = $("#bookingId").val();
+                const data = {
+                    user_id: $("#bookingUser").val(),
+                    event_id: $("#bookingEvent").val()
+                };
 
-            if (id) {
-                RestClient.put(`bookings/${id}`, data, () => {
-                    toastr.success("Booking updated.");
-                    $("#bookingModal").modal("hide");
-                    BookingService.loadBookings();
-                });
-            } else {
-                RestClient.post("bookings", data, () => {
-                    toastr.success("Booking created.");
-                    $("#bookingModal").modal("hide");
-                    BookingService.loadBookings();
-                });
+                if (id) {
+                    RestClient.put(`bookings/${id}`, data, () => {
+                        toastr.success("Booking updated.");
+                        $("#bookingModal").modal("hide");
+                        BookingService.loadBookings();
+                    });
+                } else {
+                    RestClient.post("bookings", data, () => {
+                        toastr.success("Booking created.");
+                        $("#bookingModal").modal("hide");
+                        BookingService.loadBookings();
+                    });
+                }
             }
         });
     },
