@@ -5,7 +5,7 @@ require './vendor/autoload.php';
 // CORS headers
 header("Access-Control-Allow-Origin: https://seahorse-app-jta9z.ondigitalocean.app");
 header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS");
-header("Access-Control-Allow-Headers: Content-Type, Authorization");
+header("Access-Control-Allow-Headers: Content-Type, Authentication");
 
 // Preflight OPTIONS request
 if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
