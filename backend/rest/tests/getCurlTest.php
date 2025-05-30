@@ -1,12 +1,15 @@
 <?php
 
+$token = getenv("EVENTIFY_TEST_JWT");
+
 $curl = curl_init();
 
 curl_setopt_array($curl, [
     CURLOPT_URL => "https://squid-app-lnxkv.ondigitalocean.app/categories",
     CURLOPT_RETURNTRANSFER => true,
     CURLOPT_HTTPHEADER => [
-        "Content-Type: application/json"
+        "Content-Type: application/json",
+        "Authorization: Bearer $token"
     ]
 ]);
 
@@ -19,7 +22,6 @@ echo "HTTP status: $http_code\n";
 echo "Response:\n";
 echo $response;
 
-// Exit with 1 if not OK
 if ($http_code !== 200) {
     exit(1);
 }

@@ -9,6 +9,9 @@ jobs:
     name: CI - Backend
     runs-on: ubuntu-latest
 
+    env:
+      EVENTIFY_TEST_JWT: ${{ secrets.EVENTIFY_TEST_JWT }}
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
