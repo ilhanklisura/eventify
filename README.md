@@ -104,7 +104,7 @@ http://localhost/eventify/backend/public/v1/docs/
 ```
 or
 ```
-https://seahorse-app-jta9z.ondigitalocean.app/backend/public/v1/docs/
+[https://seahorse-app-jta9z.ondigitalocean.app/backend/public/v1/docs/](https://squid-app-lnxkv.ondigitalocean.app/public/v1/docs/)
 ```
 This Swagger UI page provides details on all available endpoints, request/response formats, and authentication methods.
 
