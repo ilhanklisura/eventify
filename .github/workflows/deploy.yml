@@ -22,7 +22,7 @@ jobs:
       - name: Validate composer.json
         run: |
           cd backend
-          composer validate
+          composer validate --no-check-publish
 
       - name: Install dependencies
         run: |
