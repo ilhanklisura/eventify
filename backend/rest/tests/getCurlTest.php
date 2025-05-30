@@ -1,16 +1,10 @@
 <?php
 
-$token = getenv("EVENTIFY_TEST_JWT");
-
 $curl = curl_init();
 
 curl_setopt_array($curl, [
-    CURLOPT_URL => "https://squid-app-lnxkv.ondigitalocean.app/categories",
+    CURLOPT_URL => "https://squid-app-lnxkv.ondigitalocean.app/",
     CURLOPT_RETURNTRANSFER => true,
-    CURLOPT_HTTPHEADER => [
-        "Content-Type: application/json",
-        "Authorization: Bearer $token"
-    ]
 ]);
 
 $response = curl_exec($curl);
