@@ -32,10 +32,10 @@ jobs:
           cd backend
           composer install --no-progress
 
-      - name: Run getCurlTest
+      - name: Run curlTest
         run: |
           cd backend/rest/tests
-          php getCurlTest.php || exit 1
+          php curlTest.php || exit 1
 
   ci-frontend:
     name: CI - Frontend
