@@ -46,7 +46,8 @@ Flight::route('/*', function () {
         '/docs',
         '/docs/',
         '/docs/index.html',
-        '/docs/swagger.php'
+        '/docs/swagger.php',
+        '/dashboard/stats'
     ];
 
     $request_url = Flight::request()->url;
@@ -78,6 +79,7 @@ require_once 'rest/routes/EventRoutes.php';
 require_once 'rest/routes/TicketRoutes.php';
 require_once 'rest/routes/VenueRoutes.php';
 require_once 'rest/routes/BookingRoutes.php';
+require_once 'rest/routes/DashboardRoutes.php';
 
 // Start aplikacije
 Flight::start();
