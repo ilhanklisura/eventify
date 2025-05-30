@@ -16,29 +16,43 @@ let TicketService = {
             });
         });
 
-        $("#ticketForm").on("submit", function (e) {
-            e.preventDefault();
+        $("#ticketForm").validate({
+            rules: {
+                ticketEvent: { required: true },
+                ticketUser: { required: true },
+                ticketPrice: { required: true, number: true, min: 0 },
+                ticketStatus: { required: true }
+            },
+            messages: {
+                ticketEvent: { required: "Event is required" },
+                ticketUser: { required: "User is required" },
+                ticketPrice: {
+                    required: "Price is required",
+                    number: "Price must be a number",
+                    min: "Price cannot be negative"
+                },
+                ticketStatus: { required: "Status is required" }
+            },
+            submitHandler: function (form) {
+                const id = $("#ticketId").val();
+                const data = {
+                    event_id: $("#ticketEvent").val(),
+                    user_id: $("#ticketUser").val(),
+                    price: $("#ticketPrice").val(),
+                    status: $("#ticketStatus").val()
+                };
 
-            const id = $("#ticketId").val();
-            const data = {
-                event_id: $("#ticketEvent").val(),
-                user_id: $("#ticketUser").val(),
-                price: $("#ticketPrice").val(),
-                status: $("#ticketStatus").val()
-            };
-
-            if (id) {
-                RestClient.put(`tickets/${id}`, data, () => {
-                    toastr.success("Ticket updated.");
+                const callback = () => {
+                    toastr.success(`Ticket ${id ? "updated" : "added"} successfully.`);
                     $("#ticketModal").modal("hide");
                     TicketService.loadTickets();
-                });
-            } else {
-                RestClient.post("tickets", data, () => {
-                    toastr.success("Ticket added.");
-                    $("#ticketModal").modal("hide");
-                    TicketService.loadTickets();
-                });
+                };
+
+                if (id) {
+                    RestClient.put(`tickets/${id}`, data, callback);
+                } else {
+                    RestClient.post("tickets", data, callback);
+                }
             }
         });
     },
@@ -69,9 +83,10 @@ let TicketService = {
                     <td>${ticket.price} KM</td>
                     <td>${statusBadge}</td>
                     <td>
-                      ${this.userRole === "organizer" ? `
-                        <button class="btn btn-warning btn-sm" onclick="EventService.openEditModal(...">Edit</button>
-                        <button class="btn btn-danger btn-sm" onclick="EventService.confirmDelete(...">Delete</button>` : `No Access`}
+                        ${this.userRole === "organizer" ? `
+                          <button class="btn btn-warning btn-sm" onclick="TicketService.openEditModal(${ticket.id}, ${ticket.event_id}, ${ticket.user_id}, ${ticket.price}, '${ticket.status}')">Edit</button>
+                          <button class="btn btn-danger btn-sm" onclick="TicketService.delete(${ticket.id})">Delete</button>
+                        ` : "No Access"}
                     </td>
                 </tr>`;
                 tbody.append(row);

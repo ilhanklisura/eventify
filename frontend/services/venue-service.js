@@ -2,36 +2,47 @@ let VenueService = {
     init: function () {
         this.loadVenues();
 
-        $('#venueForm').on('submit', function (e) {
-            e.preventDefault();
-            const id = $('#venueId').val();
-            const name = $('#venueName').val().trim();
-            const location = $('#venueLocation').val().trim();
-            if (!name || !location) return toastr.error("Both name and location are required");
+        $("#venueForm").validate({
+            rules: {
+                venueName: {
+                    required: true
+                },
+                venueLocation: {
+                    required: true
+                }
+            },
+            messages: {
+                venueName: {
+                    required: "Venue name is required"
+                },
+                venueLocation: {
+                    required: "Venue location is required"
+                }
+            },
+            submitHandler: function (form) {
+                const id = $("#venueId").val();
+                const data = {
+                    name: $("#venueName").val(),
+                    location: $("#venueLocation").val()
+                };
 
-            const data = { name, location };
+                const callback = () => {
+                    toastr.success(`Venue ${id ? "updated" : "created"} successfully.`);
+                    $("#venueModal").modal("hide");
+                    VenueService.loadVenues();
+                };
 
-            if (id) {
-                // UPDATE
-                RestClient.put(`venues/${id}`, data, function () {
-                    toastr.success("Venue updated");
-                    $('#venueModal').modal('hide');
-                    VenueService.loadVenues();
-                });
-            } else {
-                // CREATE
-                RestClient.post("venues", data, function () {
-                    toastr.success("Venue created");
-                    $('#venueModal').modal('hide');
-                    VenueService.loadVenues();
-                });
+                if (id) {
+                    RestClient.put(`venues/${id}`, data, callback);
+                } else {
+                    RestClient.post("venues", data, callback);
+                }
             }
         });
     },
 
     loadVenues: function () {
-        RestClient.get("venues", function (response) {
-            const venues = Array.isArray(response) ? response : (response?.data ?? []);
+        RestClient.get("venues", function (venues) {
             const tbody = $("#venuesTable tbody").empty();
 
             venues.forEach(venue => {
@@ -54,19 +65,18 @@ let VenueService = {
     },
 
     openAddModal: function () {
-        $('#venueId').val('');
-        $('#venueName').val('');
-        $('#venueLocation').val('');
-        $('#venueModal .modal-title').text('Add Venue');
-        $('#venueModal').modal('show');
+        $("#venueForm")[0].reset();
+        $("#venueId").val('');
+        $("#venueModal .modal-title").text("Add Venue");
+        $("#venueModal").modal("show");
     },
 
     openEditModal: function (id, name, location) {
-        $('#venueId').val(id);
-        $('#venueName').val(name);
-        $('#venueLocation').val(location);
-        $('#venueModal .modal-title').text('Edit Venue');
-        $('#venueModal').modal('show');
+        $("#venueId").val(id);
+        $("#venueName").val(name);
+        $("#venueLocation").val(location);
+        $("#venueModal .modal-title").text("Edit Venue");
+        $("#venueModal").modal("show");
     },
 
     delete: function (id) {

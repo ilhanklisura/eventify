@@ -16,29 +16,43 @@ let EventService = {
             this.loadEvents();
         });
 
-        $("#eventForm").on("submit", (e) => {
-            e.preventDefault();
+        $("#eventForm").validate({
+            rules: {
+                eventTitle: "required",
+                eventDescription: "required",
+                eventDate: "required",
+                eventCategory: "required",
+                eventVenue: "required"
+            },
+            messages: {
+                eventTitle: "Title is required",
+                eventDescription: "Description is required",
+                eventDate: "Date is required",
+                eventCategory: "Category is required",
+                eventVenue: "Venue is required"
+            },
+            submitHandler: function (form) {
+                const id = $("#eventId").val();
+                const data = {
+                    title: $("#eventTitle").val(),
+                    description: $("#eventDescription").val(),
+                    date: $("#eventDate").val(),
+                    category_id: $("#eventCategory").val(),
+                    venue_id: $("#eventVenue").val(),
+                    organizer_id: EventService.userId
+                };
 
-            const id = $("#eventId").val();
-            const data = {
-                title: $("#eventTitle").val(),
-                description: $("#eventDescription").val(),
-                date: $("#eventDate").val(),
-                category_id: $("#eventCategory").val(),
-                venue_id: $("#eventVenue").val(),
-                organizer_id: EventService.userId
-            };
+                const callback = () => {
+                    toastr.success(`Event ${id ? "updated" : "created"} successfully.`);
+                    $("#eventModal").modal("hide");
+                    EventService.loadEvents();
+                };
 
-            const callback = () => {
-                toastr.success(`Event ${id ? "updated" : "created"} successfully.`);
-                $("#eventModal").modal("hide");
-                EventService.loadEvents();
-            };
-
-            if (id) {
-                RestClient.put(`events/${id}`, data, callback);
-            } else {
-                RestClient.post("events", data, callback);
+                if (id) {
+                    RestClient.put(`events/${id}`, data, callback);
+                } else {
+                    RestClient.post("events", data, callback);
+                }
             }
         });
     },
@@ -49,8 +63,7 @@ let EventService = {
                 $("#eventsTable").DataTable().destroy();
             }
 
-            const tbody = $("#eventsTable tbody");
-            tbody.empty();
+            const tbody = $("#eventsTable tbody").empty();
 
             events.forEach(event => {
                 let row = `<tr>
@@ -61,9 +74,10 @@ let EventService = {
                     <td>${this.categoryMap[event.category_id] || "N/A"}</td>
                     <td>${this.venueMap[event.venue_id] || "N/A"}</td>
                     <td>
-                      ${this.userRole === "organizer" ? `
-                        <button class="btn btn-warning btn-sm" onclick="EventService.openEditModal(...">Edit</button>
-                        <button class="btn btn-danger btn-sm" onclick="EventService.confirmDelete(...">Delete</button>` : `No Access`}
+                        ${this.userRole === "organizer"
+                    ? `<button class="btn btn-warning btn-sm" onclick="EventService.openEditModal(${event.id}, '${event.title}', '${event.description}', '${event.date}', ${event.category_id}, ${event.venue_id})">Edit</button>
+                               <button class="btn btn-danger btn-sm" onclick="EventService.confirmDelete(${event.id})">Delete</button>`
+                    : "No Access"}
                     </td>
                 </tr>`;
                 tbody.append(row);
