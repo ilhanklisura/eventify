@@ -47,7 +47,9 @@ Flight::route('/*', function () {
         '/docs/',
         '/docs/index.html',
         '/docs/swagger.php',
-        '/dashboard/stats'
+        '/dashboard/stats',
+        '/dashboard/chart/users-per-day',
+        '/dashboard/chart/events-popular'
     ];
 
     $request_url = Flight::request()->url;
@@ -80,6 +82,18 @@ require_once 'rest/routes/TicketRoutes.php';
 require_once 'rest/routes/VenueRoutes.php';
 require_once 'rest/routes/BookingRoutes.php';
 require_once 'rest/routes/DashboardRoutes.php';
+
+Flight::map('db', function() {
+    return new PDO(
+        "mysql:host=" . Config::DB_HOST() . ";dbname=" . Config::DB_NAME() . ";port=" . Config::DB_PORT(),
+        Config::DB_USER(),
+        Config::DB_PASSWORD(),
+        [
+            PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+            PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+        ]
+    );
+});
 
 // Start aplikacije
 Flight::start();

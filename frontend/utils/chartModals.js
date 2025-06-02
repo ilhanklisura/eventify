@@ -1,63 +1,52 @@
 $(document).ready(function () {
-	// Ensure the DOM is ready before executing Chart.js code
-
-	// Check if the barChart element exists
+	// Users per day - Bar Chart
 	if ($('#barChart').length) {
-	  var barChartCanvas = document.getElementById('barChart').getContext('2d');
+		$.getJSON(Constants.PROJECT_BASE_URL + "dashboard/chart/users-per-day", function (data) {
+			const labels = data.map(item => item.date);
+			const counts = data.map(item => item.count);
 
-	  var barChartData = {
-		 labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
-		 datasets: [
-			{
-			  label: 'Reserved Tickets',
-			  backgroundColor: 'rgba(60,141,188,0.9)',
-			  borderColor: 'rgba(60,141,188,0.8)',
-			  data: [28, 48, 40, 19, 86, 27, 90]
-			},
-			{
-			  label: 'Page Visitors',
-			  backgroundColor: 'rgba(210, 214, 222, 1)',
-			  borderColor: 'rgba(210, 214, 222, 1)',
-			  data: [65, 59, 80, 81, 56, 55, 40]
-			}
-		 ]
-	  };
-
-	  var barChartOptions = {
-		 responsive: true,
-		 maintainAspectRatio: false
-	  };
-
-	  new Chart(barChartCanvas, {
-		 type: 'bar',
-		 data: barChartData,
-		 options: barChartOptions
-	  });
+			var ctx = document.getElementById('barChart').getContext('2d');
+			new Chart(ctx, {
+				type: 'bar',
+				data: {
+					labels: labels,
+					datasets: [{
+						label: 'New Users Per Day',
+						backgroundColor: 'rgba(60,141,188,0.9)',
+						borderColor: 'rgba(60,141,188,0.8)',
+						data: counts
+					}]
+				},
+				options: {
+					responsive: true,
+					maintainAspectRatio: false
+				}
+			});
+		});
 	}
 
-	// Check if the donutChart element exists
+	// Most popular events - Donut Chart
 	if ($('#donutChart').length) {
-	  var donutChartCanvas = document.getElementById('donutChart').getContext('2d');
+		$.getJSON(Constants.PROJECT_BASE_URL + "dashboard/chart/events-popular", function (data) {
+			const labels = data.map(item => item.title);
+			const counts = data.map(item => item.count);
+			const backgroundColors = ['#f56954', '#00a65a', '#f39c12', '#00c0ef', '#3c8dbc', '#d2d6de'];
 
-	  var donutData = {
-		 labels: ['Predstava - \"Mojoj dragoj BiH\"', 'Srebrenica Memorial', 'Visit Hercegovina - \"Mostar, Ljubuški, Neum\"', 'Sarajevo Derby - \"Sarajevo - Željezničar\"', 'The Industrial City - \"Zenica\"', 'Concert - \"Dragana Mirković\"'],
-		 datasets: [
-			{
-			  data: [700, 500, 400, 600, 300, 100],
-			  backgroundColor: ['#f56954', '#00a65a', '#f39c12', '#00c0ef', '#3c8dbc', '#d2d6de']
-			}
-		 ]
-	  };
-
-	  var donutOptions = {
-		 maintainAspectRatio: false,
-		 responsive: true
-	  };
-
-	  new Chart(donutChartCanvas, {
-		 type: 'doughnut',
-		 data: donutData,
-		 options: donutOptions
-	  });
+			var ctx = document.getElementById('donutChart').getContext('2d');
+			new Chart(ctx, {
+				type: 'doughnut',
+				data: {
+					labels: labels,
+					datasets: [{
+						data: counts,
+						backgroundColor: backgroundColors
+					}]
+				},
+				options: {
+					maintainAspectRatio: false,
+					responsive: true
+				}
+			});
+		});
 	}
- });
+});
