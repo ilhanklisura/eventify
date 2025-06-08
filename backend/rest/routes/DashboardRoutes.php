@@ -62,7 +62,7 @@ Flight::route('GET /dashboard/chart/users-per-day', function () {
     $stmt = $pdo->prepare("
         SELECT DATE(created_at) AS date, COUNT(*) AS count
         FROM users
-        WHERE created_at >= CURDATE()
+        WHERE created_at >= CURDATE() - INTERVAL 6 DAY
         GROUP BY DATE(created_at)
         ORDER BY DATE(created_at) ASC
     ");
