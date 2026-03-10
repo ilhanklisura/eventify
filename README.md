@@ -1,151 +1,196 @@
 # Eventify
 
-Eventify is a single-page web application that connects event organizers with potential attendees. Organizers can manage their events, track ticket sales, and view analytics, while users can discover, search, and book events.
+Eventify is a web application that connects event organizers with attendees. Organizers manage events, venues, and tickets; users discover events and make bookings.
 
----
-
-## Overview
-
-Eventify is built using PHP with the FlightPHP framework for the backend and MySQL for the database. The frontend is implemented with HTML, CSS, and JavaScript, and leverages AJAX for dynamic content updates. The application is designed as a single-page app (SPA) to ensure seamless user experience, with a clear separation between the backend REST API and the frontend user interface. Secure user authentication is provided via JSON Web Tokens (JWT) along with role-based access control.
+- **Backend:** C# .NET 8 Web API, Entity Framework Core, SQL Server, JWT, FluentMigrator, SignalR, Swagger
+- **Frontend:** Vue 3, TypeScript, Vite, Vuetify
+- **API:** REST + SignalR hubs, documented with OpenAPI (Swagger)
 
 ---
 
 ## Features
 
-- **Role-Based Access:**  
-  - **Event Organizers:** Access a dedicated dashboard to create, update, and delete events, manage venues, and view ticket sales and analytics.  
-  - **Attendees:** Browse and search for events on a public main page, book tickets, and leave reviews.
-  
-- **CRUD Operations:**  
-  - Full Create, Read, Update, Delete support for at least six key entities:
-    - **Users**
-    - **Events**
-    - **Venues**
-    - **Categories**
-    - **Bookings**
-    - **Tickets**
-
-- **Responsive & Dynamic UI:**  
-  - Single-page application with AJAX-driven navigation and updates.
-  - Mobile-friendly design using Bootstrap for a consistent user experience across devices.
-
-- **Secure Authentication:**  
-  - JWT-based authentication ensures secure login and session management.
-  - Role-based authorization to differentiate between organizer and attendee access.
-
-- **RESTful API:**  
-  - Backend services built using the FlightPHP framework.
-  - API endpoints documented with OpenAPI (Swagger) for easy integration and testing.
+- **Authentication:** JWT login and registration; role-based access (attendee, organizer, admin)
+- **RBAC:** Roles (`Roles`), permissions (`Permissions`), role-permission and user-role mappings; `[Authorize("claim:permission:...")]`
+- **CRUD:** Users, Events, Categories, Venues, Tickets, Bookings (with Add/Edit/Delete UI)
+- **Permissions:** Claim-based authorization (e.g. `event_list`, `event_create`, `user_list`)
+- **Audit:** Created/Updated/Deleted tracking (BaseModel), AutoHistory `HistoryLog`
+- **Real‑time:** SignalR hub (`/hubs/notifications`) + frontend toast notifications
 
 ---
 
-## Tech Stack
+## Tech stack
 
-- **Backend:**  
-  - PHP with FlightPHP framework  
-  - PHP PDO for secure database interactions
-- **Frontend:**  
-  - HTML, CSS, JavaScript  
-  - AJAX for dynamic content updates  
-  - Bootstrap for responsive design
-- **Database:**  
-  - MySQL
-- **Authentication:**  
-  - JSON Web Tokens (JWT)
-- **Documentation:**  
-  - OpenAPI (Swagger) for API documentation
+| Layer     | Technology |
+|----------|------------|
+| Backend  | .NET 8, ASP.NET Core, EF Core, SQL Server, FluentMigrator, BCrypt, SignalR, Swagger |
+| Frontend | Vue 3, TypeScript, Vite, Vuetify, Vue Router, Vue I18n, VueUse, vue3-toastify |
+| API      | REST (JSON), JWT Bearer, SignalR hubs |
 
 ---
 
-## Database Schema
+## Prerequisites
 
-### **Entities:**
-1. **Users**
-2. **Events**
-3. **Venues**
-4. **Categories**
-5. **Bookings**
-6. **Tickets**
+- **.NET 8 SDK**
+- **Node.js 18+** (for frontend)
+- **SQL Server** (LocalDB or full SQL Server instance)
 
 ---
 
-## Setup & Installation
+## Backend setup and run
 
-1. **Clone the Repository:**
-   ```bash
-   git clone https://github.com/yourusername/eventify.git
-   cd eventify
+1. **Connection string**  
+   Edit `backend/appsettings.json` under `AppOptions:ConnectionStrings:Strings` and set your SQL Server connection:
+
+   ```json
+   "Value": "Server=(localdb)\\mssqllocaldb;Database=Eventify;Trusted_Connection=True;TrustServerCertificate=True;MultipleActiveResultSets=true"
    ```
 
-2. **Backend Setup:**
-    - Navigate to the `backend` directory.
-    - Create a MySQL database and import the provided SQL schema (`database.sql`).
-    - Update the database credentials in your configuration file.
-    - Ensure that the FlightPHP framework is properly installed and initialized.
+   For a named instance or remote server, change `Server=...` accordingly.
 
-3. **Frontend Setup:**
-    - Navigate to the `frontend` directory.
-    - Open `index.html` in your browser to run the SPA locally.
+2. **JWT (optional)**  
+   Under `AppOptions:TokenOptions` you can override:
 
-4. **Configure JWT:**
-    - Set your JWT secret keys in the backend configuration to secure authentication.
+   - `SigningKey` – secret for signing tokens (min 32 characters; use a strong value in production)
+   - `Issuer` – token issuer (e.g. `eventify_api`)
+   - `TokenDurationHours` – token lifetime (default 8)
 
-5. **Running the Application:**
-    - Use a local server environment (such as XAMPP, WAMP, or Docker) to serve both the backend and frontend.
-    - Access the application via your local domain (e.g., http://localhost/eventify/frontend).
+3. **Run backend**
 
----
+   ```bash
+   cd backend
+   dotnet run
+   ```
 
-## API Documentation
+   By default the API is at **http://localhost:5030**. Swagger UI: **http://localhost:5030/swagger**.
 
-The RESTful API is documented using the OpenAPI standard. After setting up the backend, you can access the API documentation at:
-```
-http://localhost/eventify/backend/public/v1/docs/
-```
-or
-```
-https://squid-app-lnxkv.ondigitalocean.app/public/v1/docs/
-```
-This Swagger UI page provides details on all available endpoints, request/response formats, and authentication methods.
+   On first run, FluentMigrator applies migrations and creates the database (including seed data for roles and permissions).
 
 ---
 
-## Milestones
+## Frontend setup and run
 
-Eventify is developed and deployed through 5 major milestones:
+1. **API URL**  
+   For local development the frontend is configured to call the backend at `http://localhost:5030/api` (see `frontend/.env.development`).  
+   To use a different URL, set `VITE_API_URL` in `.env.development`.
 
-- **Milestone 1:**
-    - Project setup and static frontend development.
-    - Draft ERD for the six key entities.
+2. **Install and run**
 
-- **Milestone 2:**
-    - Creation of the MySQL database schema.
-    - Implementation of the DAO layer with CRUD operations for all entities.
+   ```bash
+   cd frontend
+   npm install
+   npm run dev
+   ```
 
-- **Milestone 3:**
-    - Full CRUD functionality for all entities.
-    - Business logic implementation and dynamic content rendering via FlightPHP.
-    - API documentation with OpenAPI.
-
-- **Milestone 4:**
-    - Implementation of middleware for authentication, request validation, and error handling.
-    - JWT-based user authentication and role-based access control.
-    - Dynamic frontend updates to reflect user roles (organizers vs. attendees).
-
-- **Milestone 5:**
-    - Final frontend refactoring (MVC pattern) and security enhancements.
-    - Deployment of the application to a public hosting platform.
-    - CI/CD integration and complete project documentation.
+   The app is served at **http://localhost:5173** (Vite default).  
+   For production build: `npm run build` (output in `frontend/dist`).
 
 ---
 
-## Deployment
+## Running everything with Docker
 
-Eventify is designed to be deployed on any modern hosting platform (e.g., Heroku, DigitalOcean, AWS). Once deployed, the live application can be accessed at:
+The repo contains a `docker-compose.yml` that starts:
+
+- **db** – SQL Server 2022 container
+- **backend** – .NET API (host port `5030`)
+- **frontend** – Vue + Nginx (host port `5173`)
+
+Run:
+
+```bash
+docker compose up --build
 ```
-https://seahorse-app-jta9z.ondigitalocean.app/
+
+Once all containers are running:
+
+- Frontend: `http://localhost:5173`
+- Backend Swagger: `http://localhost:5030/swagger`
+
+The connection string and other AppOptions for containers are overridden via environment variables in `docker-compose.yml`.
+
+---
+
+## Configuration reference
+
+### Backend (`backend/appsettings.json`)
+
+- **AppOptions:ConnectionStrings**
+  - `Default` – name of the default connection (e.g. `"Default"`)
+  - `Strings` – list of `{ "Name", "Type", "Value" }`; `Type` must be `sqlserver` for this project.
+
+- **AppOptions:TokenOptions**
+  - `SigningKey` – JWT signing key (min 32 chars; keep secret in production)
+  - `Issuer` – issuer claim (e.g. `eventify_api`)
+  - `TokenDurationHours` – token validity in hours
+
+### Frontend (env)
+
+- `VITE_API_URL` – base URL of the API (e.g. `http://localhost:5030/api` in dev, or `/api` with proxy)
+- `VITE_TOKEN_KEY`, `VITE_USER_KEY`, `VITE_PERMISSIONS_KEY`, `VITE_REMEMBER_KEY` – localStorage keys (defaults in `.env` / `.env.development`)
+
+---
+
+## Project structure (after refactor)
+
+```
+eventify/
+├── backend/                 # .NET 8 Web API
+│   ├── Config/              # Data, Auth, Mvc, Swagger, Option, Dependency
+│   ├── Common/              # Auth (Token, Hash), Extensions, Services, Attributes
+│   ├── Controllers/         # API controllers
+│   ├── Hubs/                # SignalR hubs (NotificationsHub)
+│   ├── Models/
+│   │   ├── Data/            # DataContext, Entities, Migrations (FluentMigrator), Util
+│   │   ├── Option/          # ConnectionStrings, TokenOptions, AppOptions
+│   │   ├── Request/         # Request DTOs
+│   │   └── Response/        # Response DTOs
+│   ├── Services/            # Business logic (Default/, Result/, Codebook, etc.)
+│   ├── Mapping/             # Mappers
+│   └── Security/            # SecurityFilters, ISecurityHandler
+│
+└── frontend/                # Vue 3 SPA
+    ├── src/
+    │   ├── app/             # Main, auth (SignIn, Register), home (Dashboard, events, categories, …)
+    │   ├── components/      # layout, forms, pages, dialogs (ConfirmDialog)
+    │   └── lib/             # api (resources), auth, core (router, vuetify, toastify), validation, settings, signalr
+    ├── .env.development     # VITE_API_URL etc.
+    └── index.html
 ```
 
 ---
 
-Thank you for checking out Eventify! Enjoy exploring the project and feel free to contribute or provide feedback.
+## Tests
+
+Backend test project:
+
+- `backend/backend.Tests` (xUnit) – currently covers `TokenCodec` (encode/decode round‑trip and invalid signature)
+
+Run:
+
+```bash
+cd backend
+dotnet test backend.sln -c Release
+```
+
+You can add your own unit and integration tests to this project.
+
+---
+
+## CI/CD
+
+**CI:**  
+`.github/workflows/ci.yml`:
+
+- Backend job:
+  - `dotnet restore`, `dotnet build`, `dotnet test` for `backend/backend.sln`
+- Frontend job:
+  - `npm ci`, `npm run build` in `frontend/`
+
+**Deploy (DigitalOcean Apps):**  
+`.github/workflows/deploy.yml` triggers DigitalOcean App deploy for backend and frontend:
+
+- uses repo secrets: `DO_APP_ID_BACKEND`, `DO_APP_ID_FRONTEND`, `DO_API_TOKEN`
+
+---
+
+Thank you for using Eventify.

@@ -1,0 +1,42 @@
+services:
+  db:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    environment:
+      ACCEPT_EULA: "Y"
+      MSSQL_SA_PASSWORD: "YourStrong!Passw0rd"
+    ports:
+      - "1433:1433"
+    volumes:
+      - eventify_mssql:/var/opt/mssql
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    environment:
+      ASPNETCORE_ENVIRONMENT: "Production"
+      # override appsettings connection string inside container
+      AppOptions__ConnectionStrings__Default: "Default"
+      AppOptions__ConnectionStrings__Strings__0__Name: "Default"
+      AppOptions__ConnectionStrings__Strings__0__Type: "sqlserver"
+      AppOptions__ConnectionStrings__Strings__0__Value: "Server=db;Database=eventify;User Id=sa;Password=YourStrong!Passw0rd;TrustServerCertificate=True;MultipleActiveResultSets=true"
+      AppOptions__TokenOptions__SigningKey: "eventify_signing_key_at_least_32_characters_long"
+      AppOptions__TokenOptions__Issuer: "eventify_api"
+      AppOptions__TokenOptions__TokenDurationHours: "8"
+    depends_on:
+      - db
+    ports:
+      - "5030:8080"
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    depends_on:
+      - backend
+    ports:
+      - "5173:80"
+
+volumes:
+  eventify_mssql:
+

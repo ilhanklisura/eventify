@@ -1,0 +1,11 @@
+html, body, #app {
+  height: 100%;
+  margin: 0;
+}
+
+.v-application {
+  background-color: #fafafa;
+}
+
+.h-100 { height: 100%; }
+.w-100 { width: 100%; }

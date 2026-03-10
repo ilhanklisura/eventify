@@ -1,0 +1,18 @@
+backend.db
+
+# Build
+bin/
+obj/
+
+# VS Code (keep launch/tasks)
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+!.vscode/*.code-snippets
+
+.history/
+*.vsix
+.history
+.ionide

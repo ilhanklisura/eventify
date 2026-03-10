@@ -1,0 +1,9 @@
+[*.{cs,vb}]
+indent_style = space
+indent_size = 3
+tab_width = 3
+
+dotnet_diagnostic.IDE0290.severity = none
+dotnet_diagnostic.IDE0270.severity = none
+dotnet_diagnostic.IDE0049.severity = none
+dotnet_diagnostic.EF1001.severity = none
