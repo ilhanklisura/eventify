@@ -34,9 +34,11 @@ const onSubmit = async () => {
 
 <template>
   <v-card class="pa-5 py-8" width="28rem" elevation="3">
-    <v-card-item class="justify-center pa-4 pb-6">
-      <v-icon icon="event" color="primary" size="large" />
-      <v-card-title class="text-h4 text-uppercase ms-2">Eventify</v-card-title>
+    <v-card-item class="pa-4 pb-6">
+      <div class="d-flex align-center justify-center ga-2">
+        <v-icon icon="event" color="primary" size="large" />
+        <v-card-title class="text-h4 text-uppercase pa-0">Eventify</v-card-title>
+      </div>
     </v-card-item>
     <v-card-text class="pt-3">
       <h5 class="text-h5 mb-1">{{ $t('welcome') }}</h5>
