@@ -10,7 +10,7 @@ const logOut = () => {
   router.replace({ name: 'auth.sign-in' })
 }
 
-const drawer = defineModel<boolean>('drawer')
+const drawer = defineModel<boolean>()
 </script>
 
 <template>
