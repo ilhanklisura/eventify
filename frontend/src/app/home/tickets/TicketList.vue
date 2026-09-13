@@ -115,7 +115,7 @@ onMounted(load)
           <th>User</th>
           <th>Price</th>
           <th>Status</th>
-          <th></th>
+          <th>Actions</th>
         </tr>
       </thead>
       <tbody>

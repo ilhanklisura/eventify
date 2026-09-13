@@ -104,7 +104,7 @@ onMounted(load)
           <th>Name</th>
           <th>Email</th>
           <th>Role</th>
-          <th v-if="hasPermission('user_list')"></th>
+          <th v-if="hasPermission('user_list')">Actions</th>
         </tr>
       </thead>
       <tbody>

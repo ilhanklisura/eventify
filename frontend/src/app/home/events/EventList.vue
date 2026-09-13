@@ -141,7 +141,7 @@ onMounted(load)
           <th>Date</th>
           <th>Category</th>
           <th>Venue</th>
-          <th></th>
+          <th>Actions</th>
         </tr>
       </thead>
       <tbody>

@@ -83,7 +83,7 @@ onMounted(load)
       <thead>
         <tr>
           <th>Name</th>
-          <th></th>
+          <th>Actions</th>
         </tr>
       </thead>
       <tbody>
