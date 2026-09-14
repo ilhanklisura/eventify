@@ -14,7 +14,7 @@ import type { Booking } from '@/lib/api/resources/booking'
 import type { User } from '@/lib/api/resources/user'
 
 const router = useRouter()
-const { identity, hasPermission } = useAuth()
+const { identity, hasPermission, isFirstLogin } = useAuth()
 const { eventApi, bookingApi, userApi } = useApi()
 
 const loading = ref(true)
@@ -23,6 +23,7 @@ const bookings = ref<Booking[]>([])
 const users = ref<User[]>([])
 
 const roleLabel = computed(() => identity.value?.role ?? 'user')
+const welcomeMessage = computed(() => isFirstLogin.value ? 'Welcome to Eventify' : 'Welcome back')
 const isAdmin = computed(() => roleLabel.value === 'admin' || hasPermission('user_list'))
 const canSeeUsers = computed(() => hasPermission('user_list'))
 const canSeeBookings = computed(() => hasPermission('booking_list'))
@@ -111,7 +112,7 @@ onMounted(load)
       <v-col cols="12">
         <div class="d-flex align-center justify-space-between flex-wrap gap-2">
           <div>
-            <div class="text-h5">Welcome back, {{ identity?.name ?? 'User' }}</div>
+            <div class="text-h5">{{ welcomeMessage }}, {{ identity?.name ?? 'User' }}</div>
             <div class="text-body-2 text-medium-emphasis">
               Role: <strong>{{ roleLabel }}</strong>
             </div>

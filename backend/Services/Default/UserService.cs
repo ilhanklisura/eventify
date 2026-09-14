@@ -91,4 +91,16 @@ public class UserService : Service, IUserService
         return _hash.VerifyPassword(password, u.Password) ? Ok() : ValidationError("Invalid password");
     }
 
+    public ServiceResult<bool> RecordLogin(string email)
+    {
+        var user = _db.Users.FirstOrDefault(x => x.Email == email);
+        if (user == null) return NotFound();
+
+        var isFirstLogin = user.LastLoginAt == null;
+        user.LastLoginAt = DateTime.UtcNow;
+        _db.SaveChanges();
+
+        return Ok(isFirstLogin);
+    }
+
 }

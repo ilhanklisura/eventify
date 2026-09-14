@@ -13,4 +13,5 @@ public interface IUserService : IService
     ServiceResult<UserModel> Update(UpdateUserRequestModel model);
     ServiceResult Delete(int id);
     ServiceResult CheckPassword(string email, string password);
+    ServiceResult<bool> RecordLogin(string email);
 }

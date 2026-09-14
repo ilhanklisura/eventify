@@ -17,6 +17,7 @@ const remembered = useStorage<string>(rememberKey, '', localStorage)
 
 const identity = ref<User | null>(null)
 const permissions = ref<PermissionList | null>(null)
+const isFirstLogin = ref(false)
 const isSignedIn = computed(() => identity.value !== null)
 
 function parseUser(): User | null {
@@ -46,6 +47,7 @@ export function useAuth() {
     storedPermissions.value = null
     identity.value = null
     permissions.value = null
+    isFirstLogin.value = false
     clearToken()
   }
 
@@ -53,6 +55,7 @@ export function useAuth() {
     token.value = tokenResponse.value
     identity.value = tokenResponse.user
     permissions.value = tokenResponse.permissions ?? null
+    isFirstLogin.value = tokenResponse.isFirstLogin
     storedUser.value = JSON.stringify(tokenResponse.user)
     storedPermissions.value = tokenResponse.permissions ? JSON.stringify(tokenResponse.permissions) : null
     setToken(tokenResponse.value)
@@ -96,6 +99,7 @@ export function useAuth() {
     remembered,
     identity,
     permissions,
+    isFirstLogin,
     hasPermission,
   }
 }
