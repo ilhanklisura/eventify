@@ -79,7 +79,7 @@ onMounted(load)
           <th>User</th>
           <th>Event</th>
           <th>Date</th>
-          <th></th>
+          <th>Actions</th>
         </tr>
       </thead>
       <tbody>

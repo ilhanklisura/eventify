@@ -8,4 +8,5 @@ public class TokenModel
     public required string Value { get; set; }
     public required UserModel User { get; set; }
     public PermissionListModel? Permissions { get; set; }
+    public bool IsFirstLogin { get; set; }
 }

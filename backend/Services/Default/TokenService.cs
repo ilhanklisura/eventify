@@ -44,7 +44,16 @@ public class TokenService : Service, ITokenService
             ExpiresAt = expiresAt
         });
 
-        return Ok(new TokenModel { Value = tokenString, User = user.Value, Permissions = permissions.IsOk ? permissions.Value : null });
+        var login = userService.RecordLogin(email);
+        if (!login.IsOk) return MissingEntity("User");
+
+        return Ok(new TokenModel
+        {
+            Value = tokenString,
+            User = user.Value,
+            Permissions = permissions.IsOk ? permissions.Value : null,
+            IsFirstLogin = login.Value
+        });
     }
 
     public ServiceResult<ClaimsIdentity> ValidateToken(string input)

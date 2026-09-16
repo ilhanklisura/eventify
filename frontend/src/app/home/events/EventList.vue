@@ -141,7 +141,7 @@ onMounted(load)
           <th>Date</th>
           <th>Category</th>
           <th>Venue</th>
-          <th></th>
+          <th>Actions</th>
         </tr>
       </thead>
       <tbody>
@@ -154,7 +154,9 @@ onMounted(load)
             <v-btn v-if="hasPermission('event_edit')" size="small" variant="text" @click="openEdit(e)"
               >Edit</v-btn
             >
-            <v-btn size="small" variant="text" color="error" @click="remove(e.id)">Delete</v-btn>
+            <v-btn v-if="hasPermission('event_delete')" size="small" variant="text" color="error" @click="remove(e.id)"
+              >Delete</v-btn
+            >
           </td>
         </tr>
       </tbody>

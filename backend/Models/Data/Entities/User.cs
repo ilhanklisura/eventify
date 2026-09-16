@@ -18,5 +18,7 @@ public class User : BaseModel
     [Required, MaxLength(20)]
     public string Role { get; set; } = "attendee"; // organizer | attendee (display / primary)
 
+    public DateTime? LastLoginAt { get; set; }
+
     public ICollection<UserRole>? UserRoles { get; set; }
 }

@@ -10,7 +10,7 @@ const logOut = () => {
   router.replace({ name: 'auth.sign-in' })
 }
 
-const drawer = defineModel<boolean>('drawer')
+const drawer = defineModel<boolean>()
 </script>
 
 <template>
@@ -19,7 +19,7 @@ const drawer = defineModel<boolean>('drawer')
     <v-divider vertical />
     <v-toolbar-title class="text-h6">Eventify</v-toolbar-title>
     <v-spacer />
-    <v-menu>
+    <v-menu :close-on-content-click="false">
       <template #activator="{ props: menuProps }">
         <v-btn class="mx-2" v-bind="menuProps" icon="account_circle" />
       </template>

@@ -6,6 +6,7 @@ export interface Token {
   value: string
   user: User
   permissions?: PermissionList
+  isFirstLogin: boolean
 }
 
 export class TokenApi extends Resource {
