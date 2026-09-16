@@ -41,9 +41,11 @@ const onSubmit = async () => {
 
 <template>
   <v-card class="pa-5 py-8" width="28rem" elevation="3">
-    <v-card-item class="justify-center pa-4 pb-6">
-      <v-icon icon="person_add" color="primary" size="large" />
-      <v-card-title class="text-h4 text-uppercase ms-2">Register</v-card-title>
+    <v-card-item class="pa-4 pb-6">
+      <div class="d-flex align-center justify-center ga-2">
+        <v-icon icon="person_add" color="primary" size="large" />
+        <v-card-title class="text-h4 text-uppercase pa-0">Register</v-card-title>
+      </div>
     </v-card-item>
     <v-card-text>
       <LockingForm ref="form" @submit="onSubmit" v-slot="{ locked }">
